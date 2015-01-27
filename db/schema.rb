@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20150126190500) do
     t.integer  "user_id"
   end
 
+  create_table "upvotes", id: false, force: true do |t|
+    t.integer "music_id"
+    t.integer "user_id"
+    t.integer "count"
+  end
+
+  add_index "upvotes", ["music_id"], name: "index_upvotes_on_music_id"
+  add_index "upvotes", ["user_id"], name: "index_upvotes_on_user_id"
+
   create_table "users", force: true do |t|
     t.string "username"
     t.string "password"
