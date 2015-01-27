@@ -1,0 +1,17 @@
+<form method="post" action="/songs">
+  <div>
+     <label> Song title: </label>
+     <input type="text" name="song_title" value="<%=@song && @song.song_title%>">
+   </div>
+   <div>
+     <label> Singer: </label>
+     <input type="text" name="singer" value="<%=@song && @song.singer%>">
+   </div>
+   <div>
+     <label> Link: </label>
+    <input type="text" name="link" value="<%=@song && @song.url%>">
+  </div>
+   <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>
