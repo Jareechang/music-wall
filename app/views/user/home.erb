@@ -1,1 +1,30 @@
 <h1> Hello <%=@user.username %> :) </h1>
+
+<% @user.musics.each do |song| %>
+
+    <div class="songs"> 
+    <h5> Title: <a href="<%=song.url%>"><%=song.song_title%> </a></h5>
+    <h5>  by: <%= song.singer %> </h5>
+    <a href="songs/<%=song.id%>"> edit </a>
+   </div>
+  <%end%>
+<hr/>
+
+<p> add a new song </p>
+<form method="post" action="/home/<%=@user.id%>">
+  <div>
+     <label> Song title: </label>
+     <input type="text" name="song_title" value="<%=@song && @song.song_title%>">
+   </div>
+   <div>
+     <label> Singer: </label>
+     <input type="text" name="singer" value="<%=@song && @song.singer%>">
+   </div>
+   <div>
+     <label> Link: </label>
+    <input type="text" name="link" value="<%=@song && @song.url%>">
+  </div>
+   <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>

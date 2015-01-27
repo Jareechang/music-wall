@@ -38,6 +38,15 @@ get '/home' do
   erb :'user/home'
 end
 
+post '/home/:id' do
+@user = User.find(params[:id])
+@user.musics << Music.new(song_title: params[:song_title],
+                              singer: params[:singer],
+                                 url: params[:link]) 
+session[:user_id] = @user.id 
+redirect '/home'
+
+end
 
 get '/songs' do
   @songs = Music.all 
