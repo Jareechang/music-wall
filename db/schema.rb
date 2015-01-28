@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20150126190500) do
     t.integer "music_id"
     t.integer "user_id"
     t.integer "count"
+    t.string  "review"
+    t.integer "rating"
   end
 
   add_index "upvotes", ["music_id"], name: "index_upvotes_on_music_id"

@@ -1,1 +1,24 @@
-<h1>Home Page</h1>
+
+<div class="main-page">
+  <% @users.each do |user| %> 
+      <% user.musics.each do |song| %> 
+        <h1> User: <%=user.username %> </h1>
+         <div class="songs"> 
+            <h5> Title: <a href="<%=song.url%>"><%=song.song_title%> </a></h5>
+            <h5>  by: <%= song.singer %> </h5>
+              <% if !session.nil? && user.id == session[:user_id] %>
+               <a href="songs/<%=song.id%>"> edit </a>
+              <% end %>
+         </div>
+        <%end%>
+        <hr/>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 # Homepage (Root path)
 get '/' do
-erb :'user/index'
+  @users = User.all
+  # binding.pry
+erb :'/index'
 end
 
 post '/' do
@@ -12,6 +14,7 @@ post '/' do
     session[:id]= @user.id 
   else 
     #display error message
+    #should be redirect 
     erb :'user/new'
   end
 end
@@ -22,29 +25,55 @@ end
 
 post '/login' do
 
-user = User.where(username: params[:username], 
-                  password: params[:password]).first
-if user 
-  session[:user_id] = user.id 
-  redirect '/home'
+  user = User.where(username: params[:username], 
+                    password: params[:password]).first
+  if user 
+    session[:user_id] = user.id 
+    @user = User.find(session[:user_id])
+    redirect '/home'
+  end
+    redirect '/'
 end
+
+get '/signup' do
+  erb :'user/signup'
+end
+
+post '/signup' do
+  @user= User.create(username: params[:username],
+                     password: params[:password],
+                        email: params[:email]) 
+
+  if @user.save 
+    session[:id]= @user.id 
+    erb :'user/home'
+  else 
+    #display error message
+    erb :'user/signup'
+  end
+end
+
+get '/logout' do
+  session.clear 
   redirect '/'
 end
+
 
 get '/home' do 
   if session[:user_id]
     @user = User.find(session[:user_id])
+    erb :'user/home'
   end
-  erb :'user/home'
+  redirect '/'
 end
 
 post '/home/:id' do
-@user = User.find(params[:id])
-@user.musics << Music.new(song_title: params[:song_title],
-                              singer: params[:singer],
-                                 url: params[:link]) 
-session[:user_id] = @user.id 
-redirect '/home'
+  @user = User.find(params[:id])
+  @user.musics << Music.new(song_title: params[:song_title],
+                                singer: params[:singer],
+                                   url: params[:link]) 
+  session[:user_id] = @user.id 
+  redirect '/home'
 
 end
 
@@ -71,8 +100,11 @@ end
 
 
 get '/songs/:id' do
-@song = Music.find(params[:id])
-erb :'songs/edit'
+  if session[:user_id]
+    @song = Music.find(params[:id])
+    erb :'songs/edit'
+  end
+    redirect '/'
 end
 
 

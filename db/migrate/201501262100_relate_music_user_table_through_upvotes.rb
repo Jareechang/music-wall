@@ -4,6 +4,8 @@ class RelateMusicUserTableThroughUpvotes < ActiveRecord::Migration
       t.belongs_to :music, index: true
       t.belongs_to :user, index: true
       t.integer :count 
+      t.string :review
+      t.integer :rating 
     end
   end
 end
